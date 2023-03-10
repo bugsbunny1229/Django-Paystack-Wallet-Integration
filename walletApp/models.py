@@ -19,8 +19,6 @@ class WalletTransaction(models.Model):
 
     TRANSACTION_TYPES = (
         ('deposit', 'deposit'),
-        ('transfer', 'transfer'),
-        ('withdraw', 'withdraw'),
     )
     wallet = models.ForeignKey(Wallet, null=True, on_delete=models.CASCADE)
     transaction_type = models.CharField(

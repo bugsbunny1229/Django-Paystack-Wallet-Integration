@@ -5,7 +5,6 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.conf import settings
 import requests
-from django.shortcuts import get_object_or_404
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -60,10 +59,9 @@ class DepositSerializer(serializers.Serializer):
     def save(self):
         user = self.context['request'].user
         wallet = Wallet.objects.get(user=user)
-        # wallet = get_object_or_404(Wallet, user=user)
         data = self.validated_data
         url = 'https://api.paystack.co/transaction/initialize'
-        headers = {"authorization": f'Bearer {settings.PAYSTACK_SECRET_KEY}'}
+        headers = ({"authorization": f'Bearer {settings.PAYSTACK_SECRET_KEY}'})
         r = requests.post(url, headers=headers, data=data)
         response = r.json()
         WalletTransaction.objects.create(
